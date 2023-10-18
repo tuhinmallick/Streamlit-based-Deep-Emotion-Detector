@@ -24,18 +24,14 @@ def extract_text_txt(uploaded_txt_file,downloaded_txt_file):
 @st.cache(persist=True,allow_output_mutation=True,show_spinner=False,suppress_st_warning=True)
 def extract_text_pdf(uploaded_pdf_file):
     with fitz.open(uploaded_pdf_file) as intxt:
-        text = ""
-        for page in intxt:
-            text += page.get_text()
+        text = "".join(page.get_text() for page in intxt)
     return text
 
 
 @st.cache(persist=True,allow_output_mutation=True,show_spinner=False,suppress_st_warning=True)
 def extract_text_docx(uploaded_docx_file):
     doc = docx.Document(uploaded_docx_file)
-    fullText = []
-    for para in doc.paragraphs:
-        fullText.append(para.text)
+    fullText = [para.text for para in doc.paragraphs]
     return ' '.join(fullText)
 
 
