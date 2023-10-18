@@ -30,10 +30,10 @@ if format_type == "Plain Text 📝":
     text = st.text_area("Enter your text here: 🎯", height=300)
 
     if st.button("Find Emotion ✨") and (text or len(text) != 0):
-        with st.spinner(f"Finding Emotion... 💫"):
+        with st.spinner("Finding Emotion... 💫"):
             emotion_output = emotion_generate(text)
         if emotion_output:
-            st.success("✅ " + emotion_output.title())
+            st.success(f"✅ {emotion_output.title()}")
             download_success()
     else:
         st.warning("Please enter the text and choose \"Find Emotion ✨\"")
@@ -45,31 +45,35 @@ if format_type == "Documents 📑":
         with open(os.path.join(upload_path,uploaded_file.name),"wb") as f:
             f.write((uploaded_file).getbuffer())
         if uploaded_file.name.endswith('.txt') or uploaded_file.name.endswith('.TXT'):
-            with st.spinner(f"Finding Emotion... 💫"):
+            with st.spinner("Finding Emotion... 💫"):
                 uploaded_txt_file = os.path.abspath(os.path.join(upload_path,uploaded_file.name))
-                downloaded_txt_file = os.path.abspath(os.path.join(download_path,str("processed_"+uploaded_file.name)))
+                downloaded_txt_file = os.path.abspath(
+                    os.path.join(
+                        download_path, str(f"processed_{uploaded_file.name}")
+                    )
+                )
                 text = extract_text_txt(uploaded_txt_file,downloaded_txt_file)
                 emotion_output = emotion_generate(text)
             if emotion_output and len(emotion_output) != 0:
-                st.success("✅ " + emotion_output.title())
+                st.success(f"✅ {emotion_output.title()}")
                 download_success()
 
         if uploaded_file.name.endswith('.pdf') or uploaded_file.name.endswith('.PDF'):
-            with st.spinner(f"Finding Emotion... 💫"):
+            with st.spinner("Finding Emotion... 💫"):
                 uploaded_pdf_file = os.path.abspath(os.path.join(upload_path,uploaded_file.name))
                 text = extract_text_pdf(uploaded_pdf_file)
                 emotion_output = emotion_generate(text)
             if emotion_output and len(emotion_output) != 0:
-                st.success("✅ " + emotion_output.title())
+                st.success(f"✅ {emotion_output.title()}")
                 download_success()
 
         if uploaded_file.name.endswith('.docx') or uploaded_file.name.endswith('.DOCX'):
-            with st.spinner(f"Finding Emotion... 💫"):
+            with st.spinner("Finding Emotion... 💫"):
                 uploaded_docx_file = os.path.abspath(os.path.join(upload_path,uploaded_file.name))
                 text = extract_text_docx(uploaded_docx_file)
                 emotion_output = emotion_generate(text)
             if emotion_output and len(emotion_output) != 0:
-                st.success("✅ " + emotion_output.title())
+                st.success(f"✅ {emotion_output.title()}")
                 download_success()
 
     else:
